@@ -39,8 +39,8 @@ public class Player {
 		x+=velX;
 		if(x<=0)
 		x=0;
-		if(x>=435)
-		x=435;
+		if(x>=445)
+		x=445;
 		
 	}
 	
