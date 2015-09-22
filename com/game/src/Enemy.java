@@ -32,6 +32,7 @@ public class Enemy extends GameObject implements FoeEntity{
 		if(Physics.Collision(this, game.friendList))
 		{
 			controller.removeEntity(this);
+			game.setEnemiesDestroyed(game.getEnemiesDestroyed()+1);
 		}
 	}
 	public void render(Graphics g)
@@ -57,7 +58,7 @@ public class Enemy extends GameObject implements FoeEntity{
 		if(y>=640)
 		{
 			y = 0;
-			x =random.nextInt(Engine.WIDTH * Engine.SCALE);
+			x =random.nextInt(Engine.WIDTH * Engine.SCALE -32);
 		}
 	}
 }

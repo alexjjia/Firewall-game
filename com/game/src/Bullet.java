@@ -9,11 +9,13 @@ public class Bullet extends GameObject implements FriendEntity{
 	
 	private Textures text;
 	private Engine game;
+	private Controller controller;
 	
-	public Bullet(double x, double y, Textures text, Engine game)
+	public Bullet(double x, double y, Textures text, Controller controller, Engine game)
 	{
 		super(x,y);
 		this.text = text;
+		this.controller = controller;
 		this.game = game;
 	}
 	public Rectangle getBounds()
@@ -39,9 +41,10 @@ public class Bullet extends GameObject implements FriendEntity{
 	public void tick()
 	{
 		y-=7;
-		
-		
-		
+		if(Physics.Collision(this, game.foeList) || y < 0) //removes bullet if hits an enemy or goes off screen.
+		{
+			controller.removeEntity(this);
+		}
 	}
 	
 	public void render(Graphics g)
