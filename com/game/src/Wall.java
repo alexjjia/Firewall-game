@@ -2,7 +2,6 @@ package com.game.src;
 
 import java.awt.Graphics;
 import java.awt.Rectangle;
-import java.awt.image.BufferedImage;
 
 import com.game.src.entities.FriendEntity;
 

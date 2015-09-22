@@ -15,15 +15,12 @@ public class Controller {
 	private FoeEntity foe;
 	private Random randomX = new Random(640);
 	private Textures text;
+	private Engine game;
 	
-	public Controller(Textures text)
+	public Controller(Textures text, Engine game)
 	{
 		this.text = text;
-//		for(int x = 0; x < 480; x+=32)
-//		{
-//
-//			addEntity(new Wall(x, 600, text));
-//		}
+		this.game = game;
 	}
 	public void tick(){
 		for(int i = 0; i < friendList.size(); i++)
@@ -56,7 +53,7 @@ public class Controller {
 		
 		for(int i = 0; i < enemyCount; i++)
 		{
-			addEntity(new Enemy(randomX.nextInt(640), -10, text));
+			addEntity(new Enemy(randomX.nextInt(640), -10, text, this, game));
 		}
 	}
 	public void addEntity(FriendEntity friend)

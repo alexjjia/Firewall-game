@@ -40,10 +40,6 @@ public class Bullet extends GameObject implements FriendEntity{
 	{
 		y-=7;
 		
-		if(Physics.Collision(this, game.foeList))
-		{
-			System.out.println("Collision detected.");
-		}
 		
 		
 	}

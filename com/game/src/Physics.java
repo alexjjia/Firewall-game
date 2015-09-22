@@ -18,5 +18,16 @@ public class Physics {
 			}
 			return false;
 		}
+		public static boolean Collision(FoeEntity foe, LinkedList<FriendEntity> friendList)
+		{
+			for(int i = 0; i < friendList.size(); i++)
+			{
+				if(foe.getBounds().intersects(friendList.get(i).getBounds()))
+				{
+					return true;
+				}
+			}
+			return false;
+		}
 	}
 		

@@ -11,20 +11,28 @@ public class Enemy extends GameObject implements FoeEntity{
 	
 	private int speed = random.nextInt(3)+1;
 	private Textures text;
+	private Engine game;
+	private Controller controller;
 	
-	public Enemy(double x, double y, Textures text)
+	
+	public Enemy(double x, double y, Textures text, Controller controller, Engine game)
 	{
 		super(x,y);
 		this.text = text;
+		this.controller = controller;
+		this.game = game;
 	}
-	public Rectangle getBounds()
-	{
-		return new Rectangle((int)x,(int)y,32,32);
-	}
+	
 	public void tick()
 	{
 		y+=speed;
 		offScreen();
+		
+		//Enemy collision with Bullets.
+		if(Physics.Collision(this, game.friendList))
+		{
+			controller.removeEntity(this);
+		}
 	}
 	public void render(Graphics g)
 	{
@@ -38,6 +46,12 @@ public class Enemy extends GameObject implements FoeEntity{
 	{
 		return (int)y;
 	}
+	
+	public Rectangle getBounds()
+	{
+		return new Rectangle((int)x,(int)y,32,32);
+	}
+	
 	public void offScreen()
 	{
 		if(y>=640)
