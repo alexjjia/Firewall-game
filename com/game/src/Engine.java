@@ -1,0 +1,216 @@
+package com.game.src;
+
+import java.awt.Canvas;
+import java.awt.Dimension;
+import java.awt.Graphics;
+import java.awt.event.KeyEvent;
+import java.awt.image.BufferStrategy;
+import java.awt.image.BufferedImage;
+import java.io.IOException;
+
+import javax.swing.JFrame;
+
+public class Engine extends Canvas implements Runnable{
+
+	/****
+	 * Use threads to implement bullets.
+	 ***/
+	private static final long serialVersionUID = 2380565353040870831L;
+	public static final int HEIGHT = 320;
+	public static final int WIDTH = HEIGHT/4 * 3;
+	public static final int SCALE = 2;
+	public final String TITLE = "Firewall.exe";
+	
+	private boolean running = false;
+	
+	private Thread thread;
+	
+	//buffered images basically load images one behind another.
+	//private BufferedImage image = new BufferedImage(WIDTH,HEIGHT,BufferedImage.TYPE_INT_RGB);
+	private BufferedImage spriteSheet = null;
+	private BufferedImage background = null;
+	
+	private Player player;
+	private Controller controller;
+	private Textures texture;
+	
+	private boolean isShooting = false;
+	
+/////////////////////////*Thread Stuffs*////////////////////////////
+	private synchronized void start()
+	{
+		if(running) //to catch if the boolean turns true again.
+			return;
+		
+		running = true;
+		thread = new Thread(this);
+		thread.start();
+	}
+	
+	private synchronized void stop()
+	{
+		if(running)
+			return;
+		
+		running = false;
+		try{
+		thread.join();
+		}
+		catch (InterruptedException e)
+		{
+			e.printStackTrace();
+		}
+		System.exit(1);
+	}
+///////////////////////////*End Thread Stuffs*/////////////////////////////
+	
+	public void init()
+	{
+		requestFocus();
+		BufferedImageLoader loader = new BufferedImageLoader();
+		
+		try {
+			spriteSheet = loader.LoadImage("/spritesheet.png");
+			background = loader.LoadImage("/background.png");
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		addKeyListener(new KeyInput(this));
+		
+		texture = new Textures(this);
+		player = new Player(224,500, texture);
+		controller = new Controller(this, texture);
+	}
+	
+	
+	public void run(){
+		/*Game loop*/
+		init();
+		long lastTime = System.nanoTime();
+		final double FPS = 60.0;
+		double nsec = 1000000000 / FPS;
+		double delta = 0;
+		
+		int updates = 0;
+		int frames = 0;
+		long timer = System.currentTimeMillis();
+		
+		while(running){
+		long currentTime = System.nanoTime();
+		delta +=(currentTime - lastTime) / nsec;
+		lastTime = currentTime;
+		if(delta>=1)
+		{
+			tick();
+			updates++;
+			delta--;
+		}
+		render();
+		frames++;
+		
+		if(System.currentTimeMillis() - timer > 1000)
+		{
+			timer+= 1000;
+			System.out.println(updates+ " Ticks, FPS: "+ frames);
+			//System.out.println(player.getX());
+			updates = 0;
+			frames = 0;
+		}
+		}
+		
+		stop();
+	}
+	
+	private void tick(){ //tick method that updates the ticks of player and bullet.
+		player.tick();
+		controller.tick();
+	}
+	
+	private void render(){
+		BufferStrategy bstrategy = this.getBufferStrategy(); //this refers to the extended class, Canvas
+	
+		if(bstrategy == null) //to run bs once.
+		{
+			createBufferStrategy(2); //will create 2 buffers, will make three when implements animation.
+			return;
+		}
+		
+		Graphics g = bstrategy.getDrawGraphics();
+		///////////////////////////Actually Draw Stuff Here/////////////////////////////////////////
+																							////////
+																							////////
+																							////////
+		g.drawImage(background, 0, 0, getWidth(), getHeight(),this);						////////
+		player.render(g);																	////////
+		controller.render(g);																////////
+		////////////////////////////////////////////////////////////////////////////////////////////
+		g.dispose(); //gets rid of buffered strategy once done.
+		bstrategy.show();
+	}
+	
+	
+/////////////////////Keyboard Input////////////////////////////////
+		public void keyPressed(KeyEvent e)
+		{
+			int key = e.getKeyCode();
+			if(key == KeyEvent.VK_LEFT)
+			{
+				player.setVelX(-3);	
+			}
+			else if(key == KeyEvent.VK_RIGHT)
+			{
+				player.setVelX(3);	
+			}
+			else if(key == KeyEvent.VK_SPACE && !isShooting)
+			{
+				controller.addBullet(new Bullet(player.getX(), player.getY()-16, texture));
+				isShooting= true;
+			}
+		}
+		public void keyReleased(KeyEvent e)
+		{
+			int key = e.getKeyCode();
+			if(key == KeyEvent.VK_LEFT)
+			{
+				player.setVelX(0);
+			}
+			else if(key == KeyEvent.VK_RIGHT)
+			{
+				player.setVelX(0);	
+			}
+			else if(key ==KeyEvent.VK_SPACE)
+			{
+				isShooting = false;
+			}
+		}
+	///////////////////////////////////////////////////////////////////////////
+		
+	////////////////////////Main Method ///////////////////////////////////////
+	public static void main(String args[])
+	{
+		System.setProperty("sun.java2d.opengl", "true");
+		Engine game = new Engine();
+		
+		/*To set stuff up*/
+		game.setPreferredSize(new Dimension(WIDTH * SCALE, HEIGHT * SCALE));
+		game.setMaximumSize(new Dimension(WIDTH * SCALE, HEIGHT * SCALE));
+		game.setMinimumSize(new Dimension(WIDTH * SCALE, HEIGHT * SCALE));
+	
+		JFrame frame = new JFrame(game.TITLE);
+		frame.add(game);
+		frame.pack();
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.setResizable(false);
+		frame.setLocationRelativeTo(null);
+		frame.setVisible(true);
+		game.start();
+	}
+	
+	public BufferedImage getSpriteSheet()
+	{
+		return spriteSheet;
+	}
+
+}
