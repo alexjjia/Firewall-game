@@ -2,128 +2,89 @@ package com.game.src;
 
 import java.awt.Graphics;
 import java.util.LinkedList;
+import java.util.Random;
+
+import com.game.src.entities.FoeEntity;
+import com.game.src.entities.FriendEntity;
 
 public class Controller {
-	private LinkedList<Bullet> bulletList = new LinkedList<Bullet>();
-	private LinkedList<Enemy> enemyList = new LinkedList<Enemy>();
-	private LinkedList<Wall> walls = new LinkedList<Wall>();
-
-	Bullet tempBullet;
-	Enemy  tempEnemy;
-	Wall   tempWall;
-
-	Engine game;
-
-	public Controller(Engine game, Textures text)
+	private LinkedList<FriendEntity> friendList = new LinkedList<FriendEntity>();
+	private LinkedList<FoeEntity> foeList = new LinkedList<FoeEntity>();
+	
+	private FriendEntity friendly;
+	private FoeEntity foe;
+	private Random randomX = new Random(640);
+	private Textures text;
+	
+	public Controller(Textures text)
 	{
-		this.game = game;
-
-
-		//Used to test spawning of enemies.
-		for(int x = 0; x < game.WIDTH * game.SCALE; x+=32)
-		{
-			addEnemy(new Enemy(x, 0, text));
-			addWall(new Wall(x, 600, text));
-		}
-
-	}
-	public void spawnTest()
-	{
-		
+		this.text = text;
+//		for(int x = 0; x < 480; x+=32)
+//		{
+//
+//			addEntity(new Wall(x, 600, text));
+//		}
 	}
 	public void tick(){
-		for(int i = 0; i < bulletList.size(); i++)
+		for(int i = 0; i < friendList.size(); i++)
 		{
-			tempBullet = bulletList.get(i);
-			if(tempBullet.getY() < 0)
-			{
-				removeBullet(tempBullet);
-			}
-			tempBullet.tick();
+			friendly = friendList.get(i);
+			friendly.tick();
 		}
-		for(int i = 0; i < enemyList.size(); i++)
+		for(int i = 0; i < foeList.size(); i++)
 		{
-			tempEnemy = enemyList.get(i);
-
-			tempEnemy.tick();
+			foe = foeList.get(i);
+			foe.tick();
 		}
 	}
 	public void render(Graphics g)
 	{
-		for(int i = 0; i < bulletList.size(); i++)
+		for(int i = 0; i < friendList.size(); i++)
 		{
-			tempBullet = bulletList.get(i);
-			tempBullet.render(g);
+			friendly = friendList.get(i);
+			friendly.render(g);
 		}
-		for(int i = 0; i < enemyList.size(); i++)
+		for(int i = 0; i < foeList.size(); i++)
 		{
-			tempEnemy = enemyList.get(i);
-			tempEnemy.render(g);
-		}
-		for(int i = 0; i < walls.size(); i++)
-		{
-			tempWall = walls.get(i);
-			tempWall.render(g);
-		}
-
-		//Bullet to Enemy Collision
-		for(int i = 0; i < enemyList.size(); i++)
-		{
-			tempEnemy = enemyList.get(i);
-			for(int j = 0; j < bulletList.size(); j++)
-			{
-				tempBullet = bulletList.get(j);
-				if((tempEnemy.getX()<(tempBullet.getX()+32)) &&((tempEnemy.getX()+32)>tempBullet.getX()))
-				{
-					if((tempBullet.getY() <=tempEnemy.getY()) && (tempBullet.getY()+32>=tempEnemy.getY()))
-					{
-						removeBullet(tempBullet);
-						removeEnemy(tempEnemy);
-					}
-				}
-			}
-		}
-		//Enemy to Wall Collision
-		for(int i = 0; i < enemyList.size(); i++)
-		{
-			tempEnemy = enemyList.get(i);
-			for(int j = 0; j < walls.size(); j++)
-			{
-				tempWall = walls.get(j);
-				if(tempEnemy.getX()<(tempWall.getX()+32) && ((tempEnemy.getX()+32) > (tempWall.getX())))
-				{
-					if((tempWall.getY()<=tempEnemy.getY()) && ((tempWall.getY()+32) >= tempEnemy.getY() ))
-							{
-								removeWall(tempWall);
-								removeEnemy(tempEnemy);
-							}
-				}
-			}
+			foe = foeList.get(i);
+			foe.render(g);
 		}
 	}
 
-	public void addBullet(Bullet bullet)
+	public void spawnEnemy(int enemyCount)
 	{
-		bulletList.add(bullet);
+		
+		for(int i = 0; i < enemyCount; i++)
+		{
+			addEntity(new Enemy(randomX.nextInt(640), -10, text));
+		}
 	}
-	public void removeBullet(Bullet bullet)
+	public void addEntity(FriendEntity friend)
 	{
-		bulletList.remove(bullet);
+		friendList.add(friend);
+		
 	}
-	public void addEnemy(Enemy enemy)
+	public void removeEntity(FriendEntity friend)
 	{
-		enemyList.add(enemy);
+		friendList.remove(friend);
+		
 	}
-	public void removeEnemy(Enemy enemy)
+	public void addEntity(FoeEntity foe)
 	{
-		enemyList.remove(enemy);
+		foeList.add(foe);
+		
 	}
-	public void addWall(Wall wall)
+	public void removeEntity(FoeEntity foe)
 	{
-		walls.add(wall);
+		foeList.remove(foe);
+		
 	}
-	public void removeWall(Wall wall)
+	public LinkedList<FriendEntity> getFriendlies()
 	{
-		walls.remove(wall);
+		return friendList;
+	}
+	public LinkedList<FoeEntity> getFoes()
+	{
+		return foeList;
 	}
 }

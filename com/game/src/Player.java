@@ -1,29 +1,32 @@
 package com.game.src;
 
 import java.awt.Graphics;
+import java.awt.Rectangle;
 
-public class Player {
-	private double x;
-	private double y;
+import com.game.src.entities.FriendEntity;
+
+public class Player extends GameObject implements FriendEntity{
 	
 	private double velX;
 	private Textures text;
 	
 	public Player(double x, double y, Textures text)
 	{
-		this.x=x;
-		this.y=y;
+		super(x,y);
 		this.text = text;
 		
 	}
-	
-	public double getX()
+	public Rectangle getBounds()
 	{
-		return x;
+		return new Rectangle((int)x,(int)y,32,32);
 	}
-	public double getY()
+	public int getX()
 	{
-		return y;
+		return (int)x;
+	}
+	public int getY()
+	{
+		return (int)y;
 	}
 	public void setX(double x)
 	{

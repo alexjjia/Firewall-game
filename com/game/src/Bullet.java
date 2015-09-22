@@ -1,30 +1,35 @@
 package com.game.src;
 
 import java.awt.Graphics;
+import java.awt.Rectangle;
 
-public class Bullet {
-	private double x;
-	private double y;
+import com.game.src.entities.FriendEntity;
+
+public class Bullet extends GameObject implements FriendEntity{
 	
 	private Textures text;
+	private Engine game;
 	
-	public Bullet(double x, double y, Textures text)
+	public Bullet(double x, double y, Textures text, Engine game)
 	{
-		this.setX(x);
-		this.setY(y);
+		super(x,y);
 		this.text = text;
+		this.game = game;
 	}
-
-	public double getY() {
-		return y;
+	public Rectangle getBounds()
+	{
+		return new Rectangle((int)x,(int)y,32,32);
+	}
+	public int getY() {
+		return (int)y;
 	}
 
 	public void setY(double y) {
 		this.y = y;
 	}
 
-	public double getX() {
-		return x;
+	public int getX() {
+		return (int)x;
 	}
 
 	public void setX(double x) {
@@ -34,6 +39,13 @@ public class Bullet {
 	public void tick()
 	{
 		y-=7;
+		
+		if(Physics.Collision(this, game.foeList))
+		{
+			System.out.println("Collision detected.");
+		}
+		
+		
 	}
 	
 	public void render(Graphics g)

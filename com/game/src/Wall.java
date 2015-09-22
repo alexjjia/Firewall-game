@@ -1,9 +1,12 @@
 package com.game.src;
 
 import java.awt.Graphics;
+import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
 
-public class Wall {
+import com.game.src.entities.FriendEntity;
+
+public class Wall implements FriendEntity{
 	private int x;
 	private int y;
 	private Textures text;
@@ -15,7 +18,10 @@ public class Wall {
 		this.setY(y);
 		this.text = text;
 	}
-	
+	public Rectangle getBounds()
+	{
+		return new Rectangle((int)x,(int)y,32,32);
+	}
 //	public boolean gotHit()
 //	{
 //		if()/*collision occurred*/

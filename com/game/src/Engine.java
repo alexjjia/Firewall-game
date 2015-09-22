@@ -7,8 +7,12 @@ import java.awt.event.KeyEvent;
 import java.awt.image.BufferStrategy;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
+import java.util.LinkedList;
 
 import javax.swing.JFrame;
+
+import com.game.src.entities.FoeEntity;
+import com.game.src.entities.FriendEntity;
 
 public class Engine extends Canvas implements Runnable{
 
@@ -33,6 +37,12 @@ public class Engine extends Canvas implements Runnable{
 	private Player player;
 	private Controller controller;
 	private Textures texture;
+	private int enemyCount = 1;
+	private int enemiesDestroyed = 0;
+	
+	
+	public LinkedList<FriendEntity> friendList;
+	public LinkedList<FoeEntity> foeList;
 	
 	private boolean isShooting = false;
 	
@@ -81,7 +91,11 @@ public class Engine extends Canvas implements Runnable{
 		
 		texture = new Textures(this);
 		player = new Player(224,500, texture);
-		controller = new Controller(this, texture);
+		controller = new Controller(texture);
+		controller.spawnEnemy(enemyCount);
+		friendList = controller.getFriendlies();
+		foeList = controller.getFoes();
+		
 	}
 	
 	
@@ -165,7 +179,7 @@ public class Engine extends Canvas implements Runnable{
 			}
 			else if(key == KeyEvent.VK_SPACE && !isShooting)
 			{
-				controller.addBullet(new Bullet(player.getX(), player.getY()-16, texture));
+				controller.addEntity(new Bullet(player.getX(), player.getY()-16, texture, this));
 				isShooting= true;
 			}
 		}

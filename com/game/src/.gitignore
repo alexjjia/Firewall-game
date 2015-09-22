@@ -8,3 +8,9 @@
 /Spritesheet.class
 /Textures.class
 /Wall.class
+/Ent.class
+/Entity.class
+/GameObject.class
+/FriendEntity.class
+/FoeEntity.class
+/Physics.class
