@@ -9,7 +9,7 @@ import com.game.src.entities.FoeEntity;
 public class Enemy extends GameObject implements FoeEntity{
 	private Random random = new Random();
 	
-	private int speed = random.nextInt(3)+1;
+	private int speed = random.nextInt(2)+1; //Directly controls the speed of each enemy spawned.
 	private Textures text;
 	private Engine game;
 	private Controller controller;
