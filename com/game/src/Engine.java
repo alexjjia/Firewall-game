@@ -94,6 +94,7 @@ public class Engine extends Canvas implements Runnable{
 		player = new Player(224,500, texture);
 		controller = new Controller(texture, this);
 		controller.spawnEnemy(enemyCount);
+		controller.spawnWall(WIDTH/16);
 		friendList = controller.getFriendlies();
 		foeList = controller.getFoes();
 		

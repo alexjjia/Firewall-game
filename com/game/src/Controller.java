@@ -17,6 +17,7 @@ public class Controller {
 	private Textures text;
 	private Engine game;
 	
+	
 	public Controller(Textures text, Engine game)
 	{
 		this.text = text;
@@ -54,6 +55,13 @@ public class Controller {
 		for(int i = 0; i < enemyCount; i++)
 		{
 			addEntity(new Enemy(randomX.nextInt(640), -10, text, this, game));
+		}
+	}
+	public void spawnWall(int wallCount)
+	{
+		for(int i = 0; i < wallCount; i++)
+		{
+			addEntity(new Wall(i*32, 600, text, this, game));
 		}
 	}
 	public void addEntity(FriendEntity friend)

@@ -10,12 +10,16 @@ public class Wall implements FriendEntity{
 	private int y;
 	private Textures text;
 	private int numHits; //to be implemented if walls can take multiple collisions before being removed.
+	private Engine game;
+	private Controller controller;
 	
-	public Wall(int x, int y, Textures text)
+	public Wall(int x, int y, Textures text, Controller controller, Engine game)
 	{
 		this.setX(x);
 		this.setY(y);
 		this.text = text;
+		this.controller = controller;
+		this.game = game;
 	}
 	public Rectangle getBounds()
 	{
@@ -54,7 +58,10 @@ public class Wall implements FriendEntity{
 	
 	public void tick()
 	{
-		
+		if(Physics.Collision(this, game.foeList))
+		{
+			controller.removeEntity(this);
+		}
 	}
 	
 	public void render(Graphics g)
