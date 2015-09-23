@@ -41,8 +41,6 @@ public class Engine extends Canvas implements Runnable{
 	
 	private int enemyCount = 1; //tracks current number of enemies. When all are destroyed, enemyCount+1 enemies will spawn..endlessly.
 	private int enemiesDestroyed = 0; //tracks # of enemies destroyed. Will be used in determining how many points player has.
-	private int bulletCount; //debugging; used to track current number of bullets on screen.
-	
 	
 	public LinkedList<FriendEntity> friendList;
 	public LinkedList<FoeEntity> foeList;
@@ -191,7 +189,6 @@ public class Engine extends Canvas implements Runnable{
 			else if(key == KeyEvent.VK_SPACE && !isShooting)
 			{
 				controller.addEntity(new Bullet(player.getX(), player.getY()-16, texture, controller, this));
-				bulletCount++;
 				isShooting= true;
 			}
 		}
