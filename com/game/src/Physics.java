@@ -31,6 +31,7 @@ public class Physics {
 			}
 			return false;
 		}
+
 		//returns the FriendEntity that is hit when a collision occurs between a FoeEntity and it.
 		public static FriendEntity getCollided(FoeEntity foe, LinkedList<FriendEntity> friendList)
 		{

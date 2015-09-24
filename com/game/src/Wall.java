@@ -51,17 +51,14 @@ public class Wall implements FriendEntity{
 		this.y = y;
 	}
 	
-	public int numTimesHit()
-	{
-		return numHits;
-	}
-	
+//	public int numTimesHit()
+//	{
+//		return numHits;
+//	}
+//	
 	public void tick()
 	{
-		if(Physics.Collision(this, game.foeList))
-		{
-			controller.removeEntity(this);
-		}
+
 	}
 	
 	public void render(Graphics g)

@@ -91,7 +91,7 @@ public class Engine extends Canvas implements Runnable{
 		addKeyListener(new KeyInput(this));
 		
 		texture = new Textures(this);
-		player = new Player(224,500, texture);
+		player = new Player(224,585, texture);
 		controller = new Controller(texture, this);
 		controller.spawnEnemy(enemyCount);
 		controller.spawnWall(WIDTH/16);
