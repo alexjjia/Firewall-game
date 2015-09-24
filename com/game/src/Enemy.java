@@ -21,6 +21,7 @@ public class Enemy extends GameObject implements FoeEntity{
 		this.text = text;
 		this.controller = controller;
 		this.game = game;
+		
 	}
 	
 	public void tick()
@@ -34,6 +35,7 @@ public class Enemy extends GameObject implements FoeEntity{
 			controller.removeEntity(this);
 			controller.removeEntity(Physics.getCollided(this, game.friendList));
 			game.setEnemiesDestroyed(game.getEnemiesDestroyed()+1);
+			game.addPoints(100);
 		}
 	}
 	public void render(Graphics g)

@@ -41,6 +41,7 @@ public class Engine extends Canvas implements Runnable{
 	
 	private int enemyCount = 1; //tracks current number of enemies. When all are destroyed, enemyCount+1 enemies will spawn..endlessly.
 	private int enemiesDestroyed = 0; //tracks # of enemies destroyed. Will be used in determining how many points player has.
+	private int score = 0;
 	
 	public LinkedList<FriendEntity> friendList;
 	public LinkedList<FoeEntity> foeList;
@@ -130,6 +131,7 @@ public class Engine extends Canvas implements Runnable{
 		{
 			timer+= 1000;
 			System.out.println(updates+ " Ticks, FPS: "+ frames);
+			System.out.println("Current Score: "+score);
 			//System.out.println(player.getX());
 			updates = 0;
 			frames = 0;
@@ -246,6 +248,10 @@ public class Engine extends Canvas implements Runnable{
 	}
 	public int getEnemyCount() {
 		return enemyCount;
+	}
+	public void addPoints(int points)
+	{
+		score+=points;
 	}
 
 	public void setEnemyCount(int enemyCount) {

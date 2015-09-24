@@ -54,7 +54,7 @@ public class Controller {
 		
 		for(int i = 0; i < enemyCount; i++)
 		{
-			addEntity(new Enemy(randomX.nextInt(640), -10, text, this, game));
+			addEntity(new Enemy(randomX.nextInt(624), -10, text, this, game));
 		}
 	}
 	public void spawnWall(int wallCount)
