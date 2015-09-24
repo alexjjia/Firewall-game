@@ -32,6 +32,7 @@ public class Enemy extends GameObject implements FoeEntity{
 		if(Physics.Collision(this, game.friendList))
 		{
 			controller.removeEntity(this);
+			controller.removeEntity(Physics.getCollided(this, game.friendList));
 			game.setEnemiesDestroyed(game.getEnemiesDestroyed()+1);
 		}
 	}

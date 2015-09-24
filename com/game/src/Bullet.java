@@ -41,9 +41,9 @@ public class Bullet extends GameObject implements FriendEntity{
 	public void tick()
 	{
 		y-=7;
-		if(Physics.Collision(this, game.foeList) || y<0 )
+		if(y<0)
 		{
-			controller.removeEntity(this);
+			controller.removeEntity(this); //removes bullet if it goes off the screen.
 		}
 	}
 	
