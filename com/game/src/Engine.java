@@ -48,6 +48,8 @@ public class Engine extends Canvas implements Runnable{
 	
 	private boolean isShooting = false;
 	
+	private boolean enoughPoints = false;
+	
 /////////////////////////*Thread Stuffs*////////////////////////////
 	private synchronized void start()
 	{
@@ -132,6 +134,9 @@ public class Engine extends Canvas implements Runnable{
 			timer+= 1000;
 			System.out.println(updates+ " Ticks, FPS: "+ frames);
 			System.out.println("Current Score: "+score);
+			System.out.println("Enemies destroyed: "+enemiesDestroyed); //Debugging; used to track # of enemies destroyed.
+			System.out.println("Enemy count: "+enemyCount); //Debugging; used to track # of enemies spawned.
+
 			//System.out.println(player.getX());
 			updates = 0;
 			frames = 0;
@@ -144,14 +149,12 @@ public class Engine extends Canvas implements Runnable{
 	private void tick(){ //tick method that updates the ticks of player and bullet.
 		player.tick();
 		controller.tick();
-//		System.out.println("Enemies destroyed: "+enemiesDestroyed); //Debugging; used to track # of enemies destroyed.
-//		System.out.println("Enemy count: "+enemyCount); //Debugging; used to track # of enemies spawned.
 		if(enemiesDestroyed >= enemyCount)
 		{
 			enemyCount +=1;
 			enemiesDestroyed = 0; //resets.
 			controller.spawnEnemy(enemyCount);
-		}	
+		}
 	}
 	
 	private void render(){
@@ -194,6 +197,18 @@ public class Engine extends Canvas implements Runnable{
 				controller.addEntity(new Bullet(player.getX(), player.getY()-16, texture, controller, this));
 				isShooting= true;
 			}
+			else if(key == KeyEvent.VK_ENTER)
+			{
+				if(score >100000 && (score % 100000 <= 99)) //every 100,000 points, will destroy all enemies on the screen.
+				{
+					score-=100000; //deduct appropriate points. Will implement a button
+					enoughPoints = true;
+				}
+				else
+				{
+					System.out.println("Not enough points! You need "+(100000-score)+" more points.");
+				}
+			}
 		}
 		public void keyReleased(KeyEvent e)
 		{
@@ -209,6 +224,19 @@ public class Engine extends Canvas implements Runnable{
 			else if(key ==KeyEvent.VK_SPACE)
 			{
 				isShooting = false;
+			}
+			else if(key ==KeyEvent.VK_ENTER && (enoughPoints == true))
+			{
+				enemiesDestroyed = enemyCount; //causes the next wave of enemies to spawn.
+				for(int i = 0; i < foeList.size(); i++)
+				{
+					if(foeList.get(i).onScreen() == true) //purges the screen of all enemies.
+					{
+						controller.removeEntity(foeList.get(i));
+					}
+				}
+//				controller.spawnEnemy(enemyCount);
+				enoughPoints =false;
 			}
 		}
 	///////////////////////////////////////////////////////////////////////////

@@ -51,11 +51,13 @@ public class Enemy extends GameObject implements FoeEntity{
 		return (int)y;
 	}
 	
+	//collision.
 	public Rectangle getBounds()
 	{
 		return new Rectangle((int)x,(int)y,32,32);
 	}
 	
+	//When the enemy dips below the bottom of the screen, it will be moved to the top again, until it is destroyed.
 	public void offScreen()
 	{
 		if(y>=640)
@@ -63,5 +65,14 @@ public class Enemy extends GameObject implements FoeEntity{
 			y = 0;
 			x =random.nextInt(Engine.WIDTH * Engine.SCALE -32);
 		}
+	}
+	//determines if the enemy is within the bounds of the game window (visible).
+	public boolean onScreen()
+	{
+		if(y<640 && y>0)
+		{
+			return true;
+		}
+		return false;
 	}
 }

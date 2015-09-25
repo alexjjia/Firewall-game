@@ -9,7 +9,7 @@ public class Wall implements FriendEntity{
 	private int x;
 	private int y;
 	private Textures text;
-	private int numHits; //to be implemented if walls can take multiple collisions before being removed.
+//	private int numHits; //to be implemented if walls can take multiple collisions before being removed.
 	private Engine game;
 	private Controller controller;
 	

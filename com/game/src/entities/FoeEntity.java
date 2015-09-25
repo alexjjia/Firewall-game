@@ -9,5 +9,6 @@ public interface FoeEntity {
 	
 	public int getX();
 	public int getY();
+	public boolean onScreen();
 	
 }
