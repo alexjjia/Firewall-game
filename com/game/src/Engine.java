@@ -199,14 +199,14 @@ public class Engine extends Canvas implements Runnable{
 			}
 			else if(key == KeyEvent.VK_ENTER)
 			{
-				if(score >100000 && (score % 100000 <= 99)) //every 100,000 points, will destroy all enemies on the screen.
+				if(score >10000 && (score % 10000 <= 99)) //every 100,000 points, will destroy all enemies on the screen.
 				{
-					score-=100000; //deduct appropriate points. Will implement a button
+					score-=10000; //deduct appropriate points. Will implement a button
 					enoughPoints = true;
 				}
 				else
 				{
-					System.out.println("Not enough points! You need "+(100000-score)+" more points.");
+					System.out.println("Not enough points! You need "+(10000-score)+" more points.");
 				}
 			}
 		}
