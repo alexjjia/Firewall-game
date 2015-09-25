@@ -199,7 +199,7 @@ public class Engine extends Canvas implements Runnable{
 			}
 			else if(key == KeyEvent.VK_ENTER)
 			{
-				if(score >10000 && (score % 10000 <= 99)) //every 100,000 points, will destroy all enemies on the screen.
+				if(score >10000 && (score % 10000 <= 99)) //every 10,000 points, will destroy all enemies on the screen.
 				{
 					score-=10000; //deduct appropriate points. Will implement a button
 					enoughPoints = true;
