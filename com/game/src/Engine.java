@@ -195,11 +195,11 @@ public class Engine extends Canvas implements Runnable{
 			else if(key == KeyEvent.VK_SPACE && !isShooting)
 			{
 				controller.addEntity(new Bullet(player.getX(), player.getY()-16, texture, controller, this));
-				isShooting= true;
+				isShooting= true; 	
 			}
 			else if(key == KeyEvent.VK_ENTER)
 			{
-				if(score >10000 && (score % 10000 <= 99)) //every 10,000 points, will destroy all enemies on the screen.
+				if(score >10000 && (score % 100 ==0)) //every 10,000 points, will destroy all enemies on the screen.
 				{
 					score-=10000; //deduct appropriate points. Will implement a button
 					enoughPoints = true;
@@ -227,12 +227,13 @@ public class Engine extends Canvas implements Runnable{
 			}
 			else if(key ==KeyEvent.VK_ENTER && (enoughPoints == true))
 			{
-				enemiesDestroyed = enemyCount; //causes the next wave of enemies to spawn.
+//				enemiesDestroyed = enemyCount; //causes the next wave of enemies to spawn.
 				for(int i = 0; i < foeList.size(); i++)
 				{
 					if(foeList.get(i).onScreen() == true) //purges the screen of all enemies.
 					{
 						controller.removeEntity(foeList.get(i));
+						enemiesDestroyed++;
 					}
 				}
 //				controller.spawnEnemy(enemyCount);
