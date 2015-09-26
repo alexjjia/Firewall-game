@@ -69,7 +69,7 @@ public class Enemy extends GameObject implements FoeEntity{
 	//determines if the enemy is within the bounds of the game window (visible).
 	public boolean onScreen()
 	{
-		if(y<640 && y>0)
+		if((this.y<640) && (this.y>0))
 		{
 			return true;
 		}

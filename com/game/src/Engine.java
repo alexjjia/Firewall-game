@@ -43,6 +43,8 @@ public class Engine extends Canvas implements Runnable{
 	private int enemiesDestroyed = 0; //tracks # of enemies destroyed. Will be used in determining how many points player has.
 	private int score = 0;
 	
+	private int numOnScreen = 0;
+	
 	public LinkedList<FriendEntity> friendList;
 	public LinkedList<FoeEntity> foeList;
 	
@@ -136,7 +138,17 @@ public class Engine extends Canvas implements Runnable{
 			System.out.println("Current Score: "+score);
 			System.out.println("Enemies destroyed: "+enemiesDestroyed); //Debugging; used to track # of enemies destroyed.
 			System.out.println("Enemy count: "+enemyCount); //Debugging; used to track # of enemies spawned.
-
+			
+			//For debugging purposes, tells me how many enemies are on the screen. 
+			for(int i = 0; i < foeList.size(); i++)
+			{
+				if(foeList.get(i).onScreen() == true)
+				{
+					numOnScreen++;
+				}
+			}
+			System.out.println("Enemies currently on screen: "+ numOnScreen);
+			numOnScreen = 0;
 			//System.out.println(player.getX());
 			updates = 0;
 			frames = 0;
