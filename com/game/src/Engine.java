@@ -172,6 +172,7 @@ public class Engine extends Canvas implements Runnable{
 		}
 		for(int i = 0; i < foeList.size(); i++)
 		{
+//			System.out.println("Damage is: "+damage);
 		damage += foeList.get(i).getDamage();
 		if(damage>10)
 		{

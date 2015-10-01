@@ -58,14 +58,13 @@ public class Enemy extends GameObject implements FoeEntity{
 		return new Rectangle((int)x,(int)y,32,32);
 	}
 	
-	//When the enemy dips below the bottom of the screen, it will be moved to the top again, until it is destroyed.
+	//When the enemy dips below the bottom of the screen, it will be removed and the damage counter will rise.
 	public void offScreen()
 	{
-		if(y>=640)
+		if(this.y>=640)
 		{
-			damage++;
-			y = 0;
-			x =random.nextInt(Engine.WIDTH * Engine.SCALE -32);
+			damage=1;
+			controller.removeEntity(this);
 		}
 	}
 	//determines if the enemy is within the bounds of the game window (visible).
