@@ -44,6 +44,7 @@ public class Engine extends Canvas implements Runnable{
 	private int score = 0;
 	
 	private int numOnScreen = 0;
+	private int damage = 0; //# of enemies that have gotten past the player and the firewall.
 	
 	public LinkedList<FriendEntity> friendList;
 	public LinkedList<FoeEntity> foeList;
@@ -102,6 +103,7 @@ public class Engine extends Canvas implements Runnable{
 		controller.spawnWall(WIDTH/16);
 		friendList = controller.getFriendlies();
 		foeList = controller.getFoes();
+		damage = foeList.getFirst().getDamage();
 		
 	}
 	
@@ -147,7 +149,8 @@ public class Engine extends Canvas implements Runnable{
 					numOnScreen++;
 				}
 			}
-			System.out.println("Enemies currently on screen: "+ numOnScreen);
+			System.out.println("Enemies currently on screen: "+ numOnScreen + "");
+			System.out.println("Damage is "+damage);
 			numOnScreen = 0;
 			//System.out.println(player.getX());
 			updates = 0;
@@ -167,6 +170,17 @@ public class Engine extends Canvas implements Runnable{
 			enemiesDestroyed = 0; //resets.
 			controller.spawnEnemy(enemyCount);
 		}
+		for(int i = 0; i < foeList.size(); i++)
+		{
+		damage += foeList.get(i).getDamage();
+		if(damage>10)
+		{
+			running = false; //game ends.
+			System.out.println("You lose! Your score was: "+score);
+		}
+		}
+
+		
 	}
 	
 	private void render(){

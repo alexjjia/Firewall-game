@@ -13,6 +13,7 @@ public class Enemy extends GameObject implements FoeEntity{
 	private Textures text;
 	private Engine game;
 	private Controller controller;
+	private int damage = 0;
 	
 	
 	public Enemy(double x, double y, Textures text, Controller controller, Engine game)
@@ -62,6 +63,7 @@ public class Enemy extends GameObject implements FoeEntity{
 	{
 		if(y>=640)
 		{
+			damage++;
 			y = 0;
 			x =random.nextInt(Engine.WIDTH * Engine.SCALE -32);
 		}
@@ -74,5 +76,9 @@ public class Enemy extends GameObject implements FoeEntity{
 			return true;
 		}
 		return false;
+	}
+	public int getDamage() //getter class so I can know how many enemies have gotten past me.
+	{
+		return damage;
 	}
 }
