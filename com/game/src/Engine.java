@@ -104,7 +104,6 @@ public class Engine extends Canvas implements Runnable{
 		friendList = controller.getFriendlies();
 		foeList = controller.getFoes();
 		damage = foeList.getFirst().getDamage();
-		
 	}
 	
 	
@@ -157,7 +156,6 @@ public class Engine extends Canvas implements Runnable{
 			frames = 0;
 		}
 		}
-		
 		stop();
 	}
 	
@@ -170,6 +168,7 @@ public class Engine extends Canvas implements Runnable{
 			enemiesDestroyed = 0; //resets.
 			controller.spawnEnemy(enemyCount);
 		}
+		damage = 0;
 		for(int i = 0; i < foeList.size(); i++)
 		{
 //			System.out.println("Damage is: "+damage);
