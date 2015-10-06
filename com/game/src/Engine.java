@@ -46,6 +46,8 @@ public class Engine extends Canvas implements Runnable{
 	private int numOnScreen = 0;
 	private int damage = 0; //# of enemies that have gotten past the player and the firewall.
 	
+	private int enemyY;
+	
 	public LinkedList<FriendEntity> friendList;
 	public LinkedList<FoeEntity> foeList;
 	
@@ -104,6 +106,7 @@ public class Engine extends Canvas implements Runnable{
 		friendList = controller.getFriendlies();
 		foeList = controller.getFoes();
 		damage = foeList.getFirst().getDamage();
+		enemyY = foeList.getFirst().getY();
 	}
 	
 	
@@ -179,6 +182,8 @@ public class Engine extends Canvas implements Runnable{
 			System.out.println("You lose! Your score was: "+score);
 		}
 		}
+		enemyY = foeList.getFirst().getY();
+		System.out.println(enemyY);
 
 		
 	}
