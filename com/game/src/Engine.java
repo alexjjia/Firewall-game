@@ -44,7 +44,7 @@ public class Engine extends Canvas implements Runnable{
 	private int score = 0;
 	
 	private int numOnScreen = 0;
-	private int damage = 0; //# of enemies that have gotten past the player and the firewall.
+//	private int damage = 0; //# of enemies that have gotten past the player and the firewall.
 	
 	private int enemyY;
 	
@@ -105,7 +105,7 @@ public class Engine extends Canvas implements Runnable{
 		controller.spawnWall(WIDTH/16);
 		friendList = controller.getFriendlies();
 		foeList = controller.getFoes();
-		damage = foeList.getFirst().getDamage();
+	//	damage = foeList.getFirst().getDamage();
 		enemyY = foeList.getFirst().getY();
 	}
 	
@@ -152,7 +152,7 @@ public class Engine extends Canvas implements Runnable{
 				}
 			}
 			System.out.println("Enemies currently on screen: "+ numOnScreen + "");
-			System.out.println("Damage is "+damage);
+	//		System.out.println("Damage is "+damage);
 			numOnScreen = 0;
 			//System.out.println(player.getX());
 			updates = 0;
@@ -171,19 +171,19 @@ public class Engine extends Canvas implements Runnable{
 			enemiesDestroyed = 0; //resets.
 			controller.spawnEnemy(enemyCount);
 		}
-		damage = 0;
-		for(int i = 0; i < foeList.size(); i++)
-		{
-//			System.out.println("Damage is: "+damage);
-		damage += foeList.get(i).getDamage();
-		if(damage>10)
-		{
-			running = false; //game ends.
-			System.out.println("You lose! Your score was: "+score);
-		}
-		}
-		enemyY = foeList.getFirst().getY();
-		System.out.println(enemyY);
+//		damage = 0;
+//		for(int i = 0; i < foeList.size(); i++)
+//		{
+////			System.out.println("Damage is: "+damage);
+//		damage += foeList.get(i).getDamage();
+//		if(damage>10)
+//		{
+//			running = false; //game ends.
+//			System.out.println("You lose! Your score was: "+score);
+//		}
+//		}
+//		enemyY = foeList.getFirst().getY();
+//		System.out.println(enemyY);
 
 		
 	}
